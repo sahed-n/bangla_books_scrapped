@@ -1,0 +1,55 @@
+{% extends 'header_for_list.html' %}
+{% load render_table from django_tables2 %}
+{% load bootstrap3 %}
+{% load static %}
+
+<!doctype html>
+
+<html>
+<head>
+
+    <title>{% block title %}List of Books{% endblock %}</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+</head>
+
+{% block content %}
+
+
+<body>
+
+<!--    <div class="row py-1" style="margin-left:200px;margin-right:200px;margin-top:100px;">-->
+<!--    <div class="form-group py-1 col-9">-->
+<!--        {% render_table table %}-->
+
+<!--      </div>-->
+<!--      </div>-->
+
+
+<div class="row py-5" style="margin-left:0px;margin-right:0px;margin-top:-50px;">
+    <div class="form-group py-1 col-9">
+
+        <form class="search" action="" method="get">
+            <h1 style="font-size:25px"> Search by Book Name</h1>
+            <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+            <link rel="stylesheet" href="{% static 'css/base.css' %}">
+            <!--            <i class="fas fa-search"></i>-->
+            <i style='font-size:24px' class='fas'>&#xf002;</i>
+            <input name="q" class="fas fa-search" type="text" autocomplete="off" size="40"
+                   placeholder="Please insert text and press enter">
+        </form>
+        <br>
+        <br>
+        {% if filter %}
+        <form action="" method="get" class="form form-inline">
+            {% bootstrap_form filter.form layout='inline' %}
+            {% bootstrap_button 'filter' %}
+        </form>
+        {% endif %}
+        {% render_table table 'django_tables2/bootstrap.html' %}
+
+    </div>
+</div>
+</body>
+{% endblock %}
+</html>
