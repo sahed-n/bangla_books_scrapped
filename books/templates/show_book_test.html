@@ -11,34 +11,48 @@
     <title>{% block title %}List of Books{% endblock %}</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+
+    <style>
+
+        .pagination li a, .pagination li span {
+          margin-right: 8px;
+          width: 70px;
+          height: 40px;
+          line-height: 40px;
+          border: 10px solid #dadada;
+          text-align: center;
+          display: inline-block;
+          color: #666;
+          border-radius: 3px;
+          padding: 0;
+        }
+
+
+        .social-share .ts-icon-share {
+          background: #310e00;
+        }
+
+        #mytable{
+            background-color: #f1f1c1;
+        }
+    </style>
+
+
+    <script>
+        $(function() {
+            // after dom ready
+
+            if($('table#mytable').length){
+              alert('exists');
+            }
+
+        })
+    </script>
 </head>
 
 
 <body>
-<style>
 
-.pagination li a, .pagination li span {
-  margin-right: 8px;
-  width: 70px;
-  height: 40px;
-  line-height: 40px;
-  border: 10px solid #dadada;
-  text-align: center;
-  display: inline-block;
-  color: #666;
-  border-radius: 3px;
-  padding: 0;
-}
-
-
-.social-share .ts-icon-share {
-  background: #310e00;
-}
-
-#mytable{
-    background-color: #f1f1c1;
-}
-</style>
 <!--    <div class="row py-1" style="margin-left:200px;margin-right:200px;margin-top:100px;">-->
 <!--    <div class="form-group py-1 col-9">-->
 <!--        {% render_table table %}-->
@@ -48,10 +62,10 @@
 
 {% block content %}
 <!--<div class="row py-5">-->
-<!--    <div class="form-group py-1 col-9" style="margin-left:00px;margin-right:0px;margin-top:-10px;">-->
-<p>
-    this how we do it {{qq}}
-</p>
+<!--&lt;!&ndash;    <div class="form-group py-1 col-9" style="margin-left:00px;margin-right:0px;margin-top:-10px;">&ndash;&gt;-->
+<!--<p>-->
+<!--    this how we do it {{qq}}-->
+<!--</p>-->
         <form class="search" action="" method="get">
 
             <h1 style="font-size:25px"> Search by Book Name</h1>
@@ -69,7 +83,7 @@
             {% bootstrap_button 'filter' %}
         </form>
         {% endif %}
-        {% render_table table 'django_tables2/bootstrap.html' %}
+        {% render_table book_table 'django_tables2/bootstrap.html' %}
 <!--    </div>-->
 
 <!--</div>-->

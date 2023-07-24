@@ -1,0 +1,86 @@
+{% load bootstrap3 %}
+
+<!doctype html>
+<html>
+
+<head>
+    <title>List of Books</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <style>
+        #top-list{
+            background: #310e00;
+        }
+
+
+    </style>
+</head>
+
+
+<body>
+<div class="container" style="border:1px solid #cecece;">
+    <h3>Inline List</h3>
+    <ul class="list-inline" id="top-list">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Menu 1</a></li>
+        <li><a href="#">Menu 2</a></li>
+        <li><a href="#">Menu 3</a></li>
+    </ul>
+
+    {{ book_fields }}
+    <br>
+<!--    {{ books }}-->
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+
+    <div class="table-responsive" id="bookTable">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th style="width:60%;">Book Name</th>
+                <th style="width:20%;">Author</th>
+                <th style="width:20%;">link</th>
+                <th style="width:20%;">Rating</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for b in books %}
+            <tr>
+                <td>{{ b.name }}</td>
+                <td>{{ b.writer }}</td>
+                <td>{{ b.link }}</td>
+                <td>{{ b.rating }}</td>
+
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<script>
+function myFunction() {
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("bookTable");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>
+
+</body>
+
+</html>

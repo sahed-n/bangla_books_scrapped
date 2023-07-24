@@ -39,13 +39,13 @@ def showbooks(req):
     if query:
         table = BookTable(Book.objects.filter(Q(name__icontains=query))[:100])
         table.paginate(page=req.GET.get("page", 1), per_page=6)
-        return render(req, "show_book_test.html", {"table":
+        return render(req, "show_book_test.html", {"book_table":
                                                        table, "qq": query
                                                    })
     else:
         table = BookTable(Book.objects.all()[:100])
         table.paginate(page=req.GET.get("page", 1), per_page=6)
-        return render(req, "show_book_test.html", {"table":
+        return render(req, "show_book_test.html", {"book_table":
                                                        table, "qq": ""
                                                    })
     #filter = BookFilter(request.GET, queryset=Product.objects.all())
@@ -54,13 +54,18 @@ def showbooks(req):
     #     table, "qq" : query
     # })
 
+def showbooksrawtable(req):
+    s = 2
+    books = Book.objects.all()[:100]
+    field = Book._meta.get_fields()
+    return render(req, "show_book_table_raw.html", { "qq": "query", "books": books, "book_fields":field})
+
 class BookTable(tables.Table):
     class Meta:
+        attrs = {"class": "mytable"}
         model = Book
         template_name = "django_tables2/bootstrap.html"
         fields = ("name", "writer", "link", "price", "rating")
-        attrs = {"class": "mytable"}
-
 
 class BookTableView(SingleTableView):
     model = Book
@@ -96,5 +101,7 @@ class FilteredPersonListView(SingleTableMixin, FilterView):
         return Book.objects.filter(
             Q(name__icontains=query)
         )
+
+
 
 
