@@ -1,6 +1,7 @@
 from django.db.models import Q
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.http import JsonResponse
 from django.template import loader
 from django.shortcuts import render
 from django_tables2 import SingleTableView, tables, SingleTableMixin
@@ -54,11 +55,34 @@ def showbooks(req):
     #     table, "qq" : query
     # })
 
-def showbooksrawtable(req):
-    s = 2
-    books = Book.objects.all()[:100]
+def showBooksRawTable(req):
+
+    query = req.GET.get('q')
+    if query is None:
+        books = Book.objects.all()[:100]
+        query = ''
+    else:
+        books = Book.objects.filter(Q(name__icontains=query))[:100]
     field = Book._meta.get_fields()
-    return render(req, "show_book_table_raw.html", { "qq": "query", "books": books, "book_fields":field})
+    return render(req, "show_book_table_raw.html", { "qq": query, "books": books, "book_fields":field})
+
+def showPapersRawTable(req):
+
+    query = req.GET.get('q')
+    if query is None:
+        books = Book.objects.all()[:100]
+        query = ''
+    else:
+        books = Book.objects.filter(Q(name__icontains=query))[:100]
+    field = Book._meta.get_fields()
+    return render(req, "show_paper_table_raw.html", { "qq": query, "books": books, "book_fields":field})
+
+def getPaper(req, paper_id):
+    #iidd = req.GET.get('paper_id')
+    return JsonResponse({"paper_id":paper_id,
+                         #"paper_path":"D:\Sahed_works\Account Opening\From_Mamun_Sir.jpg"})
+                        "paper_path":"C:\\Users\Eblict\Desktop\A15_Presentation.pdf"})
+
 
 class BookTable(tables.Table):
     class Meta:

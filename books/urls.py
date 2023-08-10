@@ -5,5 +5,7 @@ urlpatterns = [
     path('books/', views.BookTableView.as_view()),
     path('', views.bookhome),
     path('booklist/', views.showbooks),
-    path('booktable/', views.showbooksrawtable),
+    path('booktable/', views.showBooksRawTable),
+    path('papertable/', views.showPapersRawTable),
+    path('papertable/paper/<str:paper_id>',views.getPaper)
 ]

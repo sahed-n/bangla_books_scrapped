@@ -10,65 +10,94 @@
         #top-list{
             background: #310e00;
         }
+        .menu-list {
+            width: 50%;
+            border: 2px solid red;
+            padding: 20px;
+            float : left;
+        }
 
+        .global-search {
+            width: 50%;
+            float: right;
+            padding: 20px;
+            padding-top : 50px;
+            border: 2px solid red;
+        }
 
     </style>
 </head>
 
 
 <body>
-<div class="container" style="border:1px solid #cecece;">
-    <h3>Inline List</h3>
-    <ul class="list-inline" id="top-list">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Menu 1</a></li>
-        <li><a href="#">Menu 2</a></li>
-        <li><a href="#">Menu 3</a></li>
-    </ul>
-
-    {{ book_fields }}
-    <br>
-<!--    {{ books }}-->
-    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
-
-    <div class="table-responsive" id="bookTable">
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th style="width:60%;">Book Name</th>
-                <th style="width:20%;">Author</th>
-                <th style="width:20%;">link</th>
-                <th style="width:20%;">Rating</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for b in books %}
-            <tr>
-                <td>{{ b.name }}</td>
-                <td>{{ b.writer }}</td>
-                <td>{{ b.link }}</td>
-                <td>{{ b.rating }}</td>
-
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-
+<div class="outer-container" >
+    <div class="container" style="border:1px solid #cecece;">
+        <div class = "menu-list">
+            <h3>Inline List</h3>
+            <ul class="list-inline" id="top-list">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Menu 1</a></li>
+                <li><a href="#">Menu 2</a></li>
+                <li><a href="#">Menu 3</a></li>
+            </ul>
+        </div>
+        <div class = "global-search">
+            <form class="search" action="" method="get">
+                <span style="font-size:20px">Search Books</span><br>
+                <input type="text" id="globalInput" name="q" placeholder="Search globally" title="Type in a name" value={{qq}}>
+            </form>
+        </div>
     </div>
+
+    <div class="container">
+        <!--    {{ book_fields }}-->
+        <br>
+    <!--    {{ books }}-->
+        <input type="text" id="pageInput" onkeyup="searchFromInput()" placeholder="Search for names.." title="Type in a name">
+
+        <div class="table-responsive" id="bookTable">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th style="width:5%;">#</th>
+                    <th style="width:55%;">Book Name</th>
+                    <th style="width:20%;">Author</th>
+                    <th style="width:20%;">link</th>
+                    <th style="width:20%;">Rating</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for b in books %}
+                <tr>
+                    <td>{{ b.id|add:"1" }}</td>
+                    <td>{{ b.name }}</td>
+                    <td>{{ b.writer }}</td>
+                    <td>{{ b.link }}</td>
+                    <td>{{ b.rating }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
+
 </div>
 
 <script>
-function myFunction() {
+function searchFromInput() {
   // Declare variables
   var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("myInput");
+  input = document.getElementById("pageInput");
   filter = input.value.toUpperCase();
   table = document.getElementById("bookTable");
   tr = table.getElementsByTagName("tr");
 
   // Loop through all table rows, and hide those who don't match the search query
   for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
+    td = tr[i].getElementsByTagName("td")[1];
     if (td) {
       txtValue = td.textContent || td.innerText;
       if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -78,7 +107,25 @@ function myFunction() {
       }
     }
   }
+
+
 }
+
+<!--function highlightSearched(){-->
+<!--    const $box = document.getElementById('bookTable');-->
+<!--    const $search = document.getElementById('pageInput');-->
+
+<!--    $search.addEventListener('input', (event) => {-->
+<!--      const searchText = event.target.value;-->
+<!--      const regex = new RegExp(searchText, 'gi');-->
+
+<!--      let text = $box.innerHTML;-->
+<!--      text = text.replace(/(<mark class="highlight">|<\/mark>)/gim, '');-->
+
+<!--      const newText = text.replace(regex, '<mark class="highlight">$&</mark>');-->
+<!--      $box.innerHTML = newText;-->
+<!--    });-->
+<!--}-->
 </script>
 
 </body>
