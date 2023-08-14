@@ -7,5 +7,6 @@ urlpatterns = [
     path('booklist/', views.showbooks),
     path('booktable/', views.showBooksRawTable),
     path('papertable/', views.showPapersRawTable),
-    path('papertable/paper/<str:paper_id>',views.getPaper)
+    path('papertable/paper/<str:paper_id>',views.getPaper),
+    path('papertable/showpaper/<str:paper_id>',views.showAPaper, name="paper-details")
 ]

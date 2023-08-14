@@ -1,0 +1,156 @@
+{% load bootstrap3 %}
+
+<!doctype html>
+<html>
+
+<head>
+    <title>{{ paper.name }}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        #top-list{
+            background: #310e00;
+        }
+        .menu-list {
+            width: 50%;
+            border: 2px solid red;
+            padding: 20px;
+            float : left;
+        }
+        .body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+<!--            height: 100vh;-->
+<!--            height:100%;-->
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+<!--        .pdf-container {-->
+<!--            display: flex;-->
+<!--            align-items: flex-start;-->
+<!--            gap: 20px;-->
+<!--            height: 100vh;-->
+<!--        }-->
+<!--        .pdf-viewer {-->
+<!--            border: 1px solid #ccc;-->
+<!--            width: 70%;-->
+<!--            height: 100%;-->
+<!--        }-->
+        .pdf-container {
+            display: flex;
+            align-items: stretch; /* Adjust alignment */
+            gap: 20px;
+            height: 100vh; /* Set the container height to viewport height */
+        }
+
+        .pdf-viewer {
+            border: 1px solid #ccc;
+            flex: 1; /* Allow the PDF viewer to grow and take up available space */
+        }
+        .metadata {
+            width: 30%;
+        }
+        .menu-list {
+            width: 50%;
+            border: 2px solid red;
+            padding: 20px;
+            float : left;
+        }
+
+        .global-search {
+            width: 50%;
+            float: right;
+            padding: 20px;
+            padding-top : 50px;
+            border: 2px solid red;
+        }
+    </style>
+</head>
+
+
+<body>
+<!--<div class="outer-container">-->
+    <div class="container" style="border:1px solid #cecece;">
+        <div class="menu-list">
+            <h3>Inline List</h3>
+            <ul class="list-inline" id="top-list">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Menu 1</a></li>
+                <li><a href="#">Menu 2</a></li>
+                <li><a href="#">Menu 3</a></li>
+            </ul>
+        </div>
+        <div class="global-search">
+            <form class="search" action="" method="get">
+                <span style="font-size:20px">Search Papers</span><br>
+                <input type="text" id="globalInput" name="q" placeholder="Search globally" title="Type in a name"
+                       value={{qq}}>
+            </form>
+        </div>
+    </div>
+
+    <div class="container" id="pdf-containing-container">
+
+        <br>
+        <!--    {{ books }}-->
+        <input type="text" id="pageInput" onkeyup="searchFromInput()" placeholder="Search for names.."
+               title="Type in a name">
+
+
+        <div class="pdf-container">
+            <div class="pdf-viewer">
+                the id is {{ paper.id }} {{ paper.name }} {{ paper_path }}
+                <iframe id="paper_pdf" width="100%" height="100%" frameborder="0"></iframe>
+            </div>
+            <div class="metadata">
+                <h2>Paper Information</h2>
+                <p><strong>Paper Name:</strong> {{ paper.name }}</p>
+                <p><strong>Author:</strong> {{ paper.writer }}</p>
+                <p><strong>Publication Date:</strong> August 15, 2023</p>
+                <p><strong>Abstract:</strong> This is a sample abstract for the paper...</p>
+
+                <!-- Add more metadata here as needed -->
+            </div>
+        </div>
+
+    </div>
+
+
+<!--</div>-->
+
+<script>
+function searchFromInput() {
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("pageInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("bookTable");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+
+
+}
+
+document.getElementById("paper_pdf").src="{{ paper_path }}";
+
+</script>
+
+</body>
+
+</html>

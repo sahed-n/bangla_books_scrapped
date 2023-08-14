@@ -81,7 +81,15 @@ def getPaper(req, paper_id):
     #iidd = req.GET.get('paper_id')
     return JsonResponse({"paper_id":paper_id,
                          #"paper_path":"D:\Sahed_works\Account Opening\From_Mamun_Sir.jpg"})
-                        "paper_path":"C:\\Users\Eblict\Desktop\A15_Presentation.pdf"})
+                        #"paper_path":"C:\\Users\Eblict\Desktop\A15_Presentation.pdf"})
+                         "paper_path": "https://www.africau.edu/images/default/sample.pdf"})
+
+def showAPaper(req, paper_id):
+    paper = Book.objects.get(id=paper_id)
+    #return JsonResponse({"paper_id": req})
+    return render(req, "show_a_paper.html", {"paper": paper,
+                                             "paper_path": "https://www.africau.edu/images/default/sample.pdf"})
+
 
 
 class BookTable(tables.Table):
